@@ -1,13 +1,19 @@
 package com.api.stock.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class ProductDTO {
 
+		@NotBlank
 		private Long id;
 		
+		@NotBlank
 		private String name;
 		
+		@NotBlank
 		private Integer theAmount;
 
+		@NotBlank
 		private Double value;
 
 		public Long getId() {

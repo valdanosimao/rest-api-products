@@ -3,6 +3,10 @@ package com.api.stock.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,34 +30,38 @@ public class ProductController {
 	}
 
 	@GetMapping
-	public List<ProductDTO> getProducts(){
-		return productService.getAllProducts();
+	public ResponseEntity<List<ProductDTO>> getProducts(){
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(productService.getAllProducts());
 	}
 	
+	//Ao colocar o RequestBody o spring transforma/converte as informacoes passadas como JSON, em um objeto produto
 	@PostMapping("/save")
-	public ProductDTO addProducts(@RequestBody ProductDTO productDto) { //Ao colocar o RequestBody o spring transforma/converte as informaÃ§Ãµes passadas como JSON, em um objeto produto
-		productService.saveProduct(productDto);
-		return productDto;
+	public ResponseEntity<ProductDTO> addProducts(@RequestBody @Valid ProductDTO productDto) { 
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(productService.saveProduct(productDto));
 	}
 	
 	@GetMapping("/{id}")
-	public Optional<ProductDTO> getProductsById(@PathVariable Long id){
-		return productService.getProductById(id);
+	public ResponseEntity<Optional<ProductDTO>> getProductsById(@PathVariable Long id){
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(productService.getProductById(id));
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteById(@PathVariable Long id) {
+	public ResponseEntity<Object> deleteById(@PathVariable Long id) {		
 		productService.deleteProductById(id);
-		return "product with id " + id + " successfully deleted!";
+		 return ResponseEntity.status(HttpStatus.OK).body("Product deleted successfylly");
 	}
 	
 	@PutMapping("/{id}")
-	public ProductDTO updateProduct(@RequestBody ProductDTO productDto, @PathVariable Long id) {
-		return productService.updateProduct(productDto, id);
+	public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO productDto, @PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(productService.updateProduct(productDto, id));
 	}
 	
 	
-	//mÃ©todos getters and setters
+	//metodos getters and setters
 	public ProductService getProductService() {
 		return productService;
 	}	

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +62,7 @@ private final ProductRepository productRepository;
 	 * @param produto que serao salvo
 	 * 
 	 */
+	@Transactional
 	public ProductDTO saveProduct(ProductDTO productDTO) {	
 		
 		//criar um objeto de mapeamento.
