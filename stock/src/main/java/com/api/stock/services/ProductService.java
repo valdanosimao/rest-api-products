@@ -43,7 +43,7 @@ private final ProductRepository productRepository;
 	 */
 	public Optional<ProductDTO> getProductById(Long id) {	
 		//obtendo produto pelo id
-		Optional<Product> product = productRepository.findById(id);
+		Optional<Product> product = productRepository.findById(id); 
 		
 		//se nao encontrar lanca exception
 		if(product.isEmpty()) {
